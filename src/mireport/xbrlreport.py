@@ -1202,6 +1202,14 @@ class ReportLayoutOrganiser:
                             facts = self.factsByConceptMap[r]
                             found = None
                             for fact in facts:
+                                if any(
+                                    dim != explicitDim.qname
+                                    for dim in fact.getTaxonomyDimensions()
+                                ):
+                                    # Fact is dimensioned on another axis so cannot
+                                    # belong to any cell of this table (in particular it
+                                    # must not fall through to the default-member cell).
+                                    continue
                                 eValue = fact.aspects.get(explicitDim.qname)
                                 if (eValue is None and c == defaultMember) or (
                                     eValue is not None and eValue == c.qname
@@ -1234,6 +1242,14 @@ class ReportLayoutOrganiser:
                             facts = self.factsByConceptMap[c]
                             found = None
                             for fact in facts:
+                                if any(
+                                    dim != explicitDim.qname
+                                    for dim in fact.getTaxonomyDimensions()
+                                ):
+                                    # Fact is dimensioned on another axis so cannot
+                                    # belong to any cell of this table (in particular it
+                                    # must not fall through to the default-member cell).
+                                    continue
                                 eValue = fact.aspects.get(explicitDim.qname)
                                 if (
                                     (eValue is None and r == defaultMember)
