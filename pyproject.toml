@@ -8,7 +8,13 @@ authors = [
 ]
 
 dependencies = [
-    "aoix@git+https://code.blinkace.com/xbrl/aoix.git@feature-typed-dimensions",
+    # Pinned to the SHA, never the branch. A branch pin lets an unrelated push
+    # change what deploys with no commit here to explain it, and it also made this
+    # package uninstallable from a pinned requirements file: a consumer resolving
+    # aoix to a SHA and this line naming a branch are two URLs for one package,
+    # which pip refuses outright (ResolutionImpossible).
+    # 547025f2 is what feature-typed-dimensions pointed at on 2026-09-10.
+    "aoix@git+https://code.blinkace.com/xbrl/aoix.git@547025f23cdbec0f88e741b7d899ea3075e0cc0c",
     "arelle-release>=2.37.76",
     "babel>=2.17.0",
     "flask-session",
